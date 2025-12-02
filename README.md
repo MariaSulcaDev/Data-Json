@@ -182,3 +182,70 @@ Use these payloads to test the `students` and `users` services.
   "status": "ACTIVE"
 }
 ```
+
+### Teacher Assignment Service (`vg-ms-teacher-assignment`)
+
+#### Create Assignment (POST /api/v1/teacher-assignments)
+
+```json
+{
+  "teacherUserId": "6917f97a618791630ef57d96",
+  "institutionId": "6903766132edb9d78a4c1250",
+  "assignmentType": "REGULAR",
+  "startDate": "2025-03-01",
+  "endDate": "2025-12-31",
+  "notes": "Asignación principal 2025",
+  "classrooms": [
+    {
+      "classroomId": "6903766232edb9d78a4c1251",
+      "isPrimary": true
+    }
+  ],
+  "schedules": [
+    {
+      "courseId": "f416a130-05a9-4218-a1f5-5f1db33e457c",
+      "dayOfWeek": "MONDAY",
+      "startTime": "08:00",
+      "endTime": "09:30",
+      "classroomId": "6903766232edb9d78a4c1251",
+      "sessionType": "CLASS",
+      "sessionName": "Clase de Mañana",
+      "notes": "Aula principal"
+    }
+  ]
+}
+```
+
+#### Update Assignment (PUT /api/v1/teacher-assignments/{id})
+
+**ID to use in URL**: `c4fa8b2b-9b5f-4369-8d6c-cac54d78726d`
+
+```json
+{
+  "teacherUserId": "6917f97a618791630ef57d96",
+  "institutionId": "6903766132edb9d78a4c1250",
+  "assignmentType": "REGULAR",
+  "status": "ACTIVE",
+  "startDate": "2025-03-01",
+  "endDate": "2025-12-31",
+  "notes": "Asignación actualizada",
+  "classrooms": [
+    {
+      "classroomId": "6903766232edb9d78a4c1251",
+      "isPrimary": true
+    }
+  ],
+  "schedules": [
+    {
+      "courseId": "f416a130-05a9-4218-a1f5-5f1db33e457c",
+      "dayOfWeek": "MONDAY",
+      "startTime": "08:00",
+      "endTime": "10:00",
+      "classroomId": "6903766232edb9d78a4c1251",
+      "sessionType": "CLASS",
+      "sessionName": "Clase Extendida",
+      "notes": "Horario modificado"
+    }
+  ]
+}
+```
