@@ -1,46 +1,113 @@
-# Swagger Guide
+# Documentación de Ejemplos API - SIGEI
 
-This document contains the Swagger URLs for your microservices and the JSON payloads with **real IDs** for testing.
+## 🌐 URLs de Swagger - Acceso Directo
 
-## 1. Swagger URLs
+| Microservicio | Swagger UI | Puerto |
+|---------------|------------|---------|
+| 🏢 **Institution Management** | [🔗 Abrir Swagger](https://musical-couscous-69v9q7g576gpfr6pw-9080.app.github.dev/swagger-ui.html) | 9080 |
+| 🎓 **Students** | [🔗 Abrir Swagger](https://musical-couscous-69v9q7g576gpfr6pw-9081.app.github.dev/swagger-ui/index.html) | 9081 |
+| 👥 **Users Management** | [🔗 Abrir Swagger](https://musical-couscous-69v9q7g576gpfr6pw-9083.app.github.dev/swagger-ui/index.html) | 9083 |
+| 📚 **Academic Management** | [🔗 Abrir Swagger](https://musical-couscous-69v9q7g576gpfr6pw-9084.app.github.dev/swagger-ui.html) | 9084 |
+| 👨‍🏫 **Teacher Assignment** | [🔗 Abrir Swagger](https://musical-couscous-69v9q7g576gpfr6pw-9099.app.github.dev/swagger-ui.html) | 9099 |
 
-| Microservice | Port | Swagger URL |
-| :--- | :--- | :--- |
-| **Institution Management** | 9080 | [http://localhost:9080/swagger-ui.html](http://localhost:9080/swagger-ui.html) |
-| **Students** | 9081 | [http://localhost:9081/swagger-ui/index.html](http://localhost:9081/swagger-ui/index.html) |
-| **Users Management** | 9083 | [http://localhost:9083/swagger-ui/index.html](http://localhost:9083/swagger-ui/index.html) |
-| **Academic Management** | 9084 | [http://localhost:9084/swagger-ui.html](http://localhost:9084/swagger-ui.html) |
-| **Notes** | 9086 | [http://localhost:9086/swagger-ui.html](http://localhost:9086/swagger-ui.html) |
-| **Teacher Assignment** | 9099 | [http://localhost:9099/swagger-ui.html](http://localhost:9099/swagger-ui.html) |
+### 📡 URLs Base de APIs
+
+- 🏢 **Institution:** `https://musical-couscous-69v9q7g576gpfr6pw-9080.app.github.dev`
+- 🎓 **Students:** `https://musical-couscous-69v9q7g576gpfr6pw-9081.app.github.dev`
+- 👥 **Users:** `https://musical-couscous-69v9q7g576gpfr6pw-9083.app.github.dev`
+- 📚 **Academic:** `https://musical-couscous-69v9q7g576gpfr6pw-9084.app.github.dev`
+- 👨‍🏫 **Teachers:** `https://musical-couscous-69v9q7g576gpfr6pw-9099.app.github.dev`
 
 ---
 
-## 2. JSON Payloads (with Real IDs)
+Este documento contiene ejemplos de payloads JSON para probar los endpoints de los microservicios en Swagger.
 
-Use these payloads to test the `students` and `users` services.
+## 1. Microservicio de Usuarios (`vg-ms-users-management`)
 
-### Students Service (`vg-ms-students`)
+### Crear Usuario (POST /api/v1/users)
 
-#### Create Student (POST /api/v1/students)
+**Nota:** El `userId` se genera automáticamente si no se envía, o se puede enviar si se requiere uno específico (dependiendo de la implementación de la BD).
 
 ```json
 {
-  "cui": "20250002",
+  "institutionId": "64a1f2b3e4b0a1b2c3d4e5f6",
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez López",
+  "documentType": "DNI",
+  "documentNumber": "12345678",
+  "phone": "987654321",
+  "address": "Av. Los Álamos 123, Lima",
+  "email": "juan.perez@vallegrande.edu.pe",
+  "userName": "jperez",
+  "role": "PROFESOR",
+  "status": "ACTIVE"
+}
+```
+
+### Listar Usuarios por Rol y Estado (GET /api/v1/users/role/{role}/status/{status})
+
+**Ejemplo:** `/api/v1/users/role/PROFESOR/status/ACTIVE`
+
+Respuesta exitosa:
+
+```json
+{
+  "message": "Usuarios con rol PROFESOR y estado ACTIVE obtenidos exitosamente",
+  "data": [
+    {
+      "userId": "user-profesor-001",
+      "firstName": "Juan Carlos",
+      "lastName": "Pérez López",
+      "role": "PROFESOR",
+      "status": "ACTIVE",
+      ...
+    }
+  ]
+}
+```
+
+### Actualizar Usuario (PUT /api/v1/users/{id})
+
+```json
+{
+  "institutionId": "64a1f2b3e4b0a1b2c3d4e5f6",
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez López",
+  "documentType": "DNI",
+  "documentNumber": "12345678",
+  "phone": "999888777",
+  "address": "Av. Las Palmeras 456, Lima",
+  "email": "juan.perez.updated@vallegrande.edu.pe",
+  "userName": "jperez",
+  "role": "PROFESOR",
+  "status": "ACTIVE"
+}
+```
+
+---
+
+## 2. Microservicio de Estudiantes (`vg-ms-students`)
+
+### Crear Estudiante (POST /api/v1/students)
+
+```json
+{
+  "cui": "20250001",
   "personalInfo": {
-    "names": "Nuevo Estudiante",
-    "lastNames": "Con IDs Reales",
+    "names": "Mateo Alejandro",
+    "lastNames": "Gómez Sánchez",
     "documentType": "DNI",
-    "documentNumber": "70809011",
+    "documentNumber": "87654321",
     "gender": "MASCULINO",
-    "dateOfBirth": "15/05/2016"
+    "dateOfBirth": "15/05/2019"
   },
-  "address": "Av. Real 123, Lima",
-  "photoPerfil": "https://example.com/photo.jpg",
-  "institutionId": "68ffa692b0f5ad304fa6510c",
-  "classroomId": "68ffa693b0f5ad304fa6510d",
+  "address": "Jr. Los Olivos 789, Lima",
+  "photoPerfil": "https://example.com/photos/student_20250001.jpg",
+  "institutionId": "64a1f2b3e4b0a1b2c3d4e5f6",
+  "classroomId": "64b2c3d4e5f6a7b8c9d0e1f2",
   "developmentInfo": {
-    "birthType": "Normal",
-    "complications": "Ninguna",
+    "birthType": "normal",
+    "complications": "ninguna",
     "hasAuditoryDisability": false,
     "hasVisualDisability": false,
     "hasMotorDisability": false,
@@ -56,195 +123,180 @@ Use these payloads to test the `students` and `users` services.
   },
   "guardians": [
     {
-      "relationship": "Padre",
+      "relationship": "PADRE",
       "names": "Carlos",
-      "lastNames": "Perez",
-      "phone": "999888777",
+      "lastNames": "Gómez",
+      "phone": "987123456",
       "documentType": "DNI",
-      "documentNumber": "40506070",
-      "userId": "692f32963fba67882b0a16ab"
+      "documentNumber": "11223344"
+    },
+    {
+      "relationship": "MADRE",
+      "names": "Ana",
+      "lastNames": "Sánchez",
+      "phone": "987654123",
+      "documentType": "DNI",
+      "documentNumber": "55667788"
     }
   ],
   "healthInfo": {
-    "controls": [
-      {
-        "date": "15/01/2025",
-        "weight": 35.5,
-        "height": 135.0
-      }
-    ],
+    "controls": [],
     "healthStatus": "Saludable",
     "illnesses": "Ninguna",
-    "vaccines": "Completas"
+    "vaccines": "Completas según calendario"
   }
 }
 ```
 
-#### Update Student (PUT /api/v1/students/{id})
-
-**ID to use in URL**: `68ff8ecc7fbd0ce8e3a8e902`
+### Actualizar Estudiante (PUT /api/v1/students/{id})
 
 ```json
 {
-  "studentId": "68ff8ecc7fbd0ce8e3a8e902",
-  "cui": "1234567890124",
-  "personalInfo": {
-    "names": "Ana María",
-    "lastNames": "González Vásquez",
-    "documentType": "DNI",
-    "documentNumber": "12345679",
-    "gender": "FEMENINO",
-    "dateOfBirth": "20/04/2019"
-  },
-  "address": "Jr. Los Olivos 456, Miraflores, Lima (Actualizado)",
-  "photoPerfil": "https://example.com/photos/student124.jpg",
-  "institutionId": "68ffa692b0f5ad304fa6510c",
-  "classroomId": "68ffa693b0f5ad304fa6510d",
-  "developmentInfo": {
-    "birthType": "NATURAL",
-    "complications": "Ninguna",
-    "hasAuditoryDisability": false,
-    "hasVisualDisability": false,
-    "hasMotorDisability": false,
-    "otherDisability": "",
-    "liftedHeadAt": "3 meses",
-    "satAt": "6 meses",
-    "crawledAt": "8 meses",
-    "stoodUpAt": "10 meses",
-    "walkedAt": "12 meses",
-    "controlledSphinctersAt": "2 años",
-    "spokeFirstWordsAt": "10 meses",
-    "spokeFluentlyAt": "3 años"
-  },
-  "guardians": [
-    {
-      "relationship": "PADRE",
-      "names": "Roberto Carlos",
-      "lastNames": "González Mendoza",
-      "phone": "+51987654323",
+    "studentId": "69328014a6a200cbfbe833c5",
+    "cui": "20250001",
+    "personalInfo": {
+      "names": "Mateo Alejandro",
+      "lastNames": "Gómez Sánchez",
       "documentType": "DNI",
-      "documentNumber": "87654323",
-      "userId": "692f32963fba67882b0a16ab"
-    }
-  ],
-  "healthInfo": {
-    "controls": [
+      "documentNumber": "87654321",
+      "gender": "MASCULINO",
+      "dateOfBirth": "15/05/2019",
+      "age": 6
+    },
+    "dateOfBirth": null,
+    "address": "Jr. Los Olivos 789, Lima",
+    "photoPerfil": "https://example.com/photos/student_20250001.jpg",
+    "status": "ACTIVE",
+    "institutionId": "64a1f2b3e4b0a1b2c3d4e5f6",
+    "classroomId": "64b2c3d4e5f6a7b8c9d0e1f2",
+    "developmentInfo": {
+      "birthType": "normal",
+      "complications": "ninguna",
+      "hasAuditoryDisability": false,
+      "hasVisualDisability": false,
+      "hasMotorDisability": false,
+      "otherDisability": "",
+      "liftedHeadAt": "3 meses",
+      "satAt": "6 meses",
+      "crawledAt": "8 meses",
+      "stoodUpAt": "10 meses",
+      "walkedAt": "12 meses",
+      "controlledSphinctersAt": "2 años",
+      "spokeFirstWordsAt": "1 año",
+      "spokeFluentlyAt": "3 años"
+    },
+    "guardians": [
       {
-        "date": "15/01/2024",
-        "weight": 18.5,
-        "height": 105.0
+        "relationship": "PADRE",
+        "names": "Carlos",
+        "lastNames": "Gómez",
+        "phone": "987123456",
+        "documentType": "DNI",
+        "documentNumber": "11223344",
+        "userId": "69328013bb60cebb4628793a"
+      },
+      {
+        "relationship": "MADRE",
+        "names": "Ana",
+        "lastNames": "Sánchez",
+        "phone": "987654123",
+        "documentType": "DNI",
+        "documentNumber": "55667788",
+        "userId": "69328013bb60cebb4628793b"
       }
     ],
-    "healthStatus": "Saludable",
-    "illnesses": "Ninguna",
-    "vaccines": "Esquema completo"
-  },
-  "status": "ACTIVE"
+    "healthInfo": {
+      "controls": [],
+      "healthStatus": "Saludable",
+      "illnesses": "Ninguna",
+      "vaccines": "Completas según calendario"
+    }
 }
 ```
 
-### Users Service (`vg-ms-users-management`)
+---
 
-#### Create User (POST /api/v1/users)
+## 3. Microservicio de Asignaciones (`vg-ms-teacher-assignment`)
 
-```json
-{
-  "institutionId": "68ffa692b0f5ad304fa6510c",
-  "firstName": "Nuevo",
-  "lastName": "Profesor",
-  "documentType": "DNI",
-  "documentNumber": "41239999",
-  "phone": "987654321",
-  "address": "Jr. Union 100, Lima",
-  "email": "nuevo.profesor@example.com",
-  "userName": "nprofesor",
-  "role": "TEACHER"
-}
-```
-
-#### Update User (PUT /api/v1/users/{id})
-
-**ID to use in URL**: `68ee548a0daac6689a3bec4c`
+### Crear Asignación (POST /api/v1/teacher-assignments)
 
 ```json
 {
-  "userId": "68ee548a0daac6689a3bec4c",
-  "institutionId": "68ffa692b0f5ad304fa6510c",
-  "firstName": "Carla",
-  "lastName": "Torres (Actualizado)",
-  "documentType": "DNI",
-  "documentNumber": "36254785",
-  "phone": "963852741",
-  "address": "AV. Los girasoles 123",
-  "email": "carla@gmail.com",
-  "userName": "Carla10",
-  "role": "AUXILIAR",
-  "status": "ACTIVE"
-}
-```
-
-### Teacher Assignment Service (`vg-ms-teacher-assignment`)
-
-#### Create Assignment (POST /api/v1/teacher-assignments)
-
-```json
-{
-  "teacherUserId": "6917f97a618791630ef57d96",
-  "institutionId": "6903766132edb9d78a4c1250",
+  "teacherUserId": "68f960c40791bb1b468aa8c3",
+  "institutionId": "68fda092d832a694a0c77a87",
   "assignmentType": "REGULAR",
   "startDate": "2025-03-01",
-  "endDate": "2025-12-31",
-  "notes": "Asignación principal 2025",
+  "endDate": "2025-12-20",
+  "notes": "Asignación principal para el año académico 2025",
   "classrooms": [
     {
-      "classroomId": "6903766232edb9d78a4c1251",
+      "classroomId": "68fda093d832a694a0c77a88",
       "isPrimary": true
     }
   ],
   "schedules": [
     {
-      "courseId": "f416a130-05a9-4218-a1f5-5f1db33e457c",
+      "courseId": "9bac96a4-4f1f-47cf-88e5-5616ff4ca100",
       "dayOfWeek": "MONDAY",
       "startTime": "08:00",
-      "endTime": "09:30",
-      "classroomId": "6903766232edb9d78a4c1251",
-      "sessionType": "CLASS",
-      "sessionName": "Clase de Mañana",
-      "notes": "Aula principal"
+      "endTime": "10:00",
+      "classroomId": "68fda093d832a694a0c77a88",
+      "sessionType": "MULTI_CLASSROOM",
+      "sessionName": "Matemática - Sesión 1",
+      "notes": "Aula Principal"
+    },
+    {
+      "courseId": "9bac96a4-4f1f-47cf-88e5-5616ff4ca100",
+      "dayOfWeek": "WEDNESDAY",
+      "startTime": "10:30",
+      "endTime": "12:30",
+      "classroomId": "68fda093d832a694a0c77a88",
+      "sessionType": "MULTI_CLASSROOM",
+      "sessionName": "Comunicación - Sesión 1",
+      "notes": "Aula Principal"
     }
   ]
 }
 ```
 
-#### Update Assignment (PUT /api/v1/teacher-assignments/{id})
+### Actualizar Asignación (PUT /api/v1/teacher-assignments/{id})
 
-**ID to use in URL**: `c4fa8b2b-9b5f-4369-8d6c-cac54d78726d`
+ID = 995017f4-0590-41c4-9a47-c6573cf1e96f
 
 ```json
 {
-  "teacherUserId": "6917f97a618791630ef57d96",
-  "institutionId": "6903766132edb9d78a4c1250",
+  "teacherUserId": "68f960c40791bb1b468aa8c3",
+  "institutionId": "68fda092d832a694a0c77a87",
   "assignmentType": "REGULAR",
-  "status": "ACTIVE",
   "startDate": "2025-03-01",
-  "endDate": "2025-12-31",
-  "notes": "Asignación actualizada",
+  "endDate": "2025-12-20",
+  "notes": "Asignación principal para el año académico 2025",
   "classrooms": [
     {
-      "classroomId": "6903766232edb9d78a4c1251",
+      "classroomId": "68fda093d832a694a0c77a88",
       "isPrimary": true
     }
   ],
   "schedules": [
     {
-      "courseId": "f416a130-05a9-4218-a1f5-5f1db33e457c",
+      "courseId": "9bac96a4-4f1f-47cf-88e5-5616ff4ca100",
       "dayOfWeek": "MONDAY",
-      "startTime": "08:00",
+      "startTime": "09:30",
       "endTime": "10:00",
-      "classroomId": "6903766232edb9d78a4c1251",
-      "sessionType": "CLASS",
-      "sessionName": "Clase Extendida",
-      "notes": "Horario modificado"
+      "classroomId": "68fda093d832a694a0c77a88",
+      "sessionType": "MULTI_CLASSROOM",
+      "sessionName": "Matemática - Sesión 1",
+      "notes": "Aula Principal"
+    },
+    {
+      "courseId": "9bac96a4-4f1f-47cf-88e5-5616ff4ca100",
+      "dayOfWeek": "WEDNESDAY",
+      "startTime": "10:30",
+      "endTime": "12:30",
+      "classroomId": "68fda093d832a694a0c77a88",
+      "sessionType": "MULTI_CLASSROOM",
+      "sessionName": "Comunicación - Sesión 1",
+      "notes": "Aula Principal"
     }
   ]
 }
